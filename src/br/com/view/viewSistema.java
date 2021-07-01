@@ -1,11 +1,11 @@
-/*
+/*//GEN-LINE:variables
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package br.com.view;
 
-import ConnectionFac.Conexao;
+
 import br.com.entity.Cliente;
 import br.com.entity.Produto;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class viewSistema extends javax.swing.JFrame {
 
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         Header = new javax.swing.JPanel();
@@ -401,30 +401,30 @@ public class viewSistema extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void campoCodClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCodClienteActionPerformed
+    private void campoCodClienteActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCodClienteActionPerformed
+    }                                               
 
-    private void campoTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelActionPerformed
+    private void campoTelActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoTelActionPerformed
+    }                                        
 
-    private void ButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNovoClienteActionPerformed
+    private void ButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {                                                  
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonNovoClienteActionPerformed
+    }                                                 
 
-    private void ButtonNovoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonNovoClienteMouseClicked
+    private void ButtonNovoClienteMouseClicked(java.awt.event.MouseEvent evt) {                                               
         String nomeCliente = campoNomeCliente.getText();
         String endCliente = campoEndereco.getText();
         String telCliente = campoTel.getText();
              
         
    
-    }//GEN-LAST:event_ButtonNovoClienteMouseClicked
+    }                                              
 
-    private void ButtonConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonConfirmarMouseClicked
+    private void ButtonConfirmarMouseClicked(java.awt.event.MouseEvent evt) {                                             
         Produto produto = new Produto();
         
         produto.setId(1);
@@ -435,11 +435,11 @@ public class viewSistema extends javax.swing.JFrame {
         listaProduto.add(produto);
         listarProduto();
         
-    }//GEN-LAST:event_ButtonConfirmarMouseClicked
+    }                                            
 
-    private void ProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutosActionPerformed
+    private void ProdutosActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-    }//GEN-LAST:event_ProdutosActionPerformed
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -477,7 +477,7 @@ public class viewSistema extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton ButtonConfirmar;
     private javax.swing.JButton ButtonNovoCliente;
     private javax.swing.JButton ButtonPagamento;
@@ -509,5 +509,5 @@ public class viewSistema extends javax.swing.JFrame {
     private javax.swing.JLabel labelTel;
     private javax.swing.JTextField precoProduto;
     private javax.swing.JTextField qtdProduto;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
