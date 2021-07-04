@@ -20,7 +20,7 @@ public class ConexaoBanco {
     public Connection getConnection(){
         url = "jdbc:postgresql://localhost:5432/db_projpronatec";
         usuario = "postgres";
-        senha = "daburahboy123";
+        senha = "postgres";
         
         try {
             Class.forName("org.postgresql.Driver");
