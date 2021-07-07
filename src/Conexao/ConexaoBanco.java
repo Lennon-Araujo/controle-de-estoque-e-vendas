@@ -5,57 +5,51 @@
  */
 package Conexao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class ConexaoBanco {
     
-    private String url;
-    private String usuario;
-    private String senha;
+    public Statement stm;
+    public ResultSet rs;
+    private String driver = "org.postgresql.Driver";
+    private String url = "jdbc:postgresql://localhost:5432";
+    private String usuario = "postgres";
+    private String senha = "daburahboy123";
+    public Connection con;
     
-    public Connection getConnection(){
-        url = "jdbc:postgresql://localhost:5432/db_projpronatec";
-        usuario = "postgres";
-        senha = "postgres";
-        
+    public void conexao(){
         try {
-            Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(url,usuario,senha);
+            System.setProperty("jdbc.Drivers", driver);
+
+            con=DriverManager.getConnection(url, usuario, senha);
+            //JOptionPane.showMessageDialog(null, "Conexão realizada!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao se conectar:\n" +ex.getMessage());
+
+        }
+        
+    }
+    public void executasql (String sql){
+        try {
+            stm = con.createStatement(rs.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+            rs = stm.executeQuery(sql);
             
-        } catch (Exception e) {
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no executa sql:\n" +ex.getMessage());
+
         }
     }
     
-    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException{
-        close(conn,ps,rs);
-    }
-    
-    public static void closeConnection(Connection conn, PreparedStatement ps) throws SQLException{
-        close(conn,ps,null);
-    }
-     
-    public static void closeConnection(Connection conn) throws SQLException{
-        close(conn,null,null);
-    }
-
-    private static void close(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
+    public void desconexao(){
         try {
-            if(conn!= null)
-                conn.close();
-            if(ps!=null)
-                ps.close();
-            if(rs != null)
-                rs.close();;
-        } catch (Exception e) {
-            throw new SQLException(e.getMessage());            
+            con.close();
+            //JOptionPane.showMessageDialog(null, "Desconectado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar conexão:\n" +ex.getMessage());
         }
-        
     }
 
-    
 }

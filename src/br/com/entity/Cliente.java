@@ -3,13 +3,21 @@ package br.com.entity;
 
 
 public class Cliente {
+
+
     
     private int idCliente;
     private String nomeCliente;
     private String endCliente;
     private String telCliente;
+    private String pesquisa;
 
     // construtores
+
+    public Cliente() {
+    }
+    
+    
     public Cliente(int idCliente, String nomeCliente, String endCliente, String telCliente) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
@@ -49,6 +57,20 @@ public class Cliente {
 
     public void setTelCliente(String telCliente) {
         this.telCliente = telCliente;
+    }
+    
+        /**
+     * @return the pesquisa
+     */
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    /**
+     * @param pesquisa the pesquisa to set
+     */
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
     }
     
     //métodos
