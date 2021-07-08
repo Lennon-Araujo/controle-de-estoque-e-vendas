@@ -5,15 +5,23 @@
  */
 package br.com.view;
 
+import Conexao.ConexaoBanco;
+import Conexao.Utility;
+import br.com.entity.Cliente;
+import br.com.entity.Produto;
+
 /**
  *
  * @author lenno
  */
 public class TodosProdutos extends javax.swing.JFrame {
+    
+    ConexaoBanco conecta = new ConexaoBanco();
+    Utility util = new Utility();
+    Cliente cliteste = new Cliente();
+    Produto prodteste = new Produto();
 
-    /**
-     * Creates new form TodosProdutos
-     */
+
     public TodosProdutos() {
         initComponents();
     }
@@ -29,8 +37,14 @@ public class TodosProdutos extends javax.swing.JFrame {
 
         Header = new javax.swing.JPanel();
         TituloPage = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        novoqtd = new javax.swing.JTextField();
+        novonome = new javax.swing.JTextField();
+        novopreco = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ButtonSalvarProd = new javax.swing.JButton();
+        SairButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,13 +55,13 @@ public class TodosProdutos extends javax.swing.JFrame {
         TituloPage.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         TituloPage.setForeground(new java.awt.Color(250, 250, 250));
         TituloPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TituloPage.setText("Produtos");
+        TituloPage.setText("Adicionar Produto");
 
         javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
         Header.setLayout(HeaderLayout);
         HeaderLayout.setHorizontalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TituloPage, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+            .addComponent(TituloPage, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
         );
         HeaderLayout.setVerticalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -57,28 +71,60 @@ public class TodosProdutos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nome", "Quantidade", "Preço"
+        novoqtd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novoqtdActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+
+        jLabel1.setText("Nome do produto:");
+
+        jLabel2.setText("Quantidade adicional:");
+
+        jLabel3.setText("Preço do produto:");
+
+        ButtonSalvarProd.setText("Salvar Novo Produto");
+        ButtonSalvarProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonSalvarProdMouseClicked(evt);
+            }
+        });
+
+        SairButton.setText("Sair");
+        SairButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SairButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(novopreco, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(novoqtd, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(novonome, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(SairButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ButtonSalvarProd)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,12 +133,41 @@ public class TodosProdutos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(novonome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(novoqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(novopreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonSalvarProd)
+                    .addComponent(SairButton))
+                .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void novoqtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoqtdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_novoqtdActionPerformed
+
+    private void ButtonSalvarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSalvarProdMouseClicked
+        prodteste.setNomeProduto(novonome.getText());
+        prodteste.setQuantProduto(Integer.parseInt(novoqtd.getText()));
+        prodteste.setPrecoProduto(Double.parseDouble(novopreco.getText()));
+        util.SalvarProd(prodteste);
+    }//GEN-LAST:event_ButtonSalvarProdMouseClicked
+
+    private void SairButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SairButtonMouseClicked
+        setVisible(false);
+    }//GEN-LAST:event_SairButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -130,9 +205,15 @@ public class TodosProdutos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonSalvarProd;
     private javax.swing.JPanel Header;
+    private javax.swing.JButton SairButton;
     private javax.swing.JLabel TituloPage;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField novonome;
+    private javax.swing.JTextField novopreco;
+    private javax.swing.JTextField novoqtd;
     // End of variables declaration//GEN-END:variables
 }

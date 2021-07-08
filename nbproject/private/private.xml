@@ -5,8 +5,11 @@
         <group>
             <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/br/com/view/NewJFrame.java</file>
             <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/Conexao/ConexaoBanco.java</file>
+            <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/br/com/entity/Venda.java</file>
             <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/Conexao/Utility.java</file>
+            <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/br/com/entity/Produto.java</file>
             <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/br/com/entity/Cliente.java</file>
+            <file>file:/C:/Users/lenno/OneDrive/Documents/NetBeansProjects/ProjetoControledeVendas/src/br/com/view/TodosProdutos.java</file>
         </group>
     </open-files>
 </project-private>

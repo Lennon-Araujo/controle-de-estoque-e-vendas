@@ -2,11 +2,11 @@
 package br.com.entity;
 
 public class Produto {
-    //atributos
     private int id;
     private String nomeProduto;
     private int quantProduto;
     private double precoProduto;
+    private String pesquisaprod;
     
     //métodos
     
@@ -51,6 +51,21 @@ public class Produto {
     public void setId(int id) {
         this.id = id;
     }
+    
+        /**
+     * @return the pesquisaprod
+     */
+    public String getPesquisaprod() {
+        return pesquisaprod;
+    }
+
+    /**
+     * @param pesquisaprod the pesquisaprod to set
+     */
+    public void setPesquisaprod(String pesquisaprod) {
+        this.pesquisaprod = pesquisaprod;
+    }
+    //atributos
     
     public void cadastrarProduto(String prod, int quant, double preco){
         this.nomeProduto = prod;

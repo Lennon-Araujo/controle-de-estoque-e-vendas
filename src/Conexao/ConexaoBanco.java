@@ -15,9 +15,9 @@ public class ConexaoBanco {
     public Statement stm;
     public ResultSet rs;
     private String driver = "org.postgresql.Driver";
-    private String url = "jdbc:postgresql://localhost:5432";
+    private String url = "jdbc:postgresql://localhost:5433/db_projpronatec";
     private String usuario = "postgres";
-    private String senha = "daburahboy123";
+    private String senha = "1234";
     public Connection con;
     
     public void conexao(){
@@ -34,7 +34,7 @@ public class ConexaoBanco {
     }
     public void executasql (String sql){
         try {
-            stm = con.createStatement(rs.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+            stm = con.createStatement(rs.TYPE_SCROLL_SENSITIVE,rs.CONCUR_READ_ONLY);
             rs = stm.executeQuery(sql);
             
         } catch (SQLException ex) {

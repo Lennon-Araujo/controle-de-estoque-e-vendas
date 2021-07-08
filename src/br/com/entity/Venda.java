@@ -2,15 +2,48 @@
 package br.com.entity;
 
 
-public class Venda extends Produto {
+public class Venda extends Cliente {
     
-    private String cliente;
-    private int idVenda = 0;
 
-    public Venda(String nomeProduto, int quantProduto, double precoProduto) {
-        super(nomeProduto, quantProduto, precoProduto);
+    private int idVenda;
+    private int qtdProd;
+    private double valorvenda;
+
+    public Venda() {
     }
+
+    public int getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
+    }
+
+    public int getQtdProd() {
+        return qtdProd;
+    }
+
+    public void setQtdProd(int qtdProd) {
+        this.qtdProd = qtdProd;
+    }
+
+    public double getValorvenda() {
+        return valorvenda;
+    }
+
+    public void setValorvenda(double valorvenda) {
+        this.valorvenda = valorvenda;
+    }
+
     
-    
-    
+    public Double totalVenda(Double preco, int qtd){
+        this.valorvenda += (preco * qtd);
+        
+        return this.valorvenda;
+        
+    }
 }
+    
+    
+  
