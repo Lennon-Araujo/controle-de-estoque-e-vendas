@@ -87,10 +87,6 @@ public class Produto {
     }
     public Double subTotal (double preco,int qtd){
         return preco * qtd;
-    }
-    
-    
-    
-    
+    }  
     
 }

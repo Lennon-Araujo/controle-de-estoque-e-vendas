@@ -21,10 +21,10 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author lenno
+ * @author lennon
  */
 public class NewJFrame extends javax.swing.JFrame {
-    
+
     ConexaoBanco conecta = new ConexaoBanco();
     Utility util = new Utility();
     Cliente cliteste = new Cliente();
@@ -35,7 +35,7 @@ public class NewJFrame extends javax.swing.JFrame {
     List<Cliente> listaCliente = new ArrayList<>();
     List<Produto> listaProduto = new ArrayList<>();
     List<Venda> listaTotal = new ArrayList<>();
-    
+
     public void listarProduto() {
         //modelo padrão para usar tabela
         DefaultTableModel dados = (DefaultTableModel) Tabela.getModel();
@@ -50,15 +50,26 @@ public class NewJFrame extends javax.swing.JFrame {
                 produto.getQuantProduto(),
                 produto.subTotal(produto.getPrecoProduto(), produto.getQuantProduto())
 
-
             });
+        }
+
+    }
+
+    public void CampoTotal() {
+        Venda pegaTotal = new Venda();
+        for (Produto produto : listaProduto) {
+            pegaTotal.totalVenda(produto.subTotal(produto.getPrecoProduto(), produto.getQuantProduto()));
+            pegaTotal.setQtdProd(produto.getQuantProduto());
 
         }
+        campoSubtotal.setText("R$ " + String.valueOf(pegaTotal.getValorvenda()));
+        salvaprod.setValorvenda(pegaTotal.getValorvenda());
     }
-    
+
     public NewJFrame() {
         initComponents();
         preencherProd();
+        campoCodCliente.setEnabled(false);
     }
 
     /**
@@ -87,11 +98,13 @@ public class NewJFrame extends javax.swing.JFrame {
         PanelCarrinhoDeCompras = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
+        ExcluirItem = new javax.swing.JButton();
         PanelResumoDaCompra = new javax.swing.JPanel();
         labelSubtotal = new javax.swing.JLabel();
         campoSubtotal = new javax.swing.JFormattedTextField();
         ButtonPagamento = new javax.swing.JButton();
         CancelaCompra = new javax.swing.JButton();
+        FecharProg = new javax.swing.JButton();
         PanelItemDeCompra = new javax.swing.JPanel();
         labelProduto = new javax.swing.JLabel();
         jComboBoxProduto = new javax.swing.JComboBox<>();
@@ -251,19 +264,32 @@ public class NewJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(Tabela);
 
+        ExcluirItem.setText("Excluir Item do Carrinho");
+        ExcluirItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ExcluirItemMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelCarrinhoDeComprasLayout = new javax.swing.GroupLayout(PanelCarrinhoDeCompras);
         PanelCarrinhoDeCompras.setLayout(PanelCarrinhoDeComprasLayout);
         PanelCarrinhoDeComprasLayout.setHorizontalGroup(
             PanelCarrinhoDeComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCarrinhoDeComprasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                .addGroup(PanelCarrinhoDeComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCarrinhoDeComprasLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(ExcluirItem)))
                 .addContainerGap())
         );
         PanelCarrinhoDeComprasLayout.setVerticalGroup(
             PanelCarrinhoDeComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCarrinhoDeComprasLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ExcluirItem)
                 .addContainerGap())
         );
 
@@ -274,6 +300,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
         campoSubtotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         campoSubtotal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        campoSubtotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoSubtotalActionPerformed(evt);
+            }
+        });
 
         ButtonPagamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ButtonPagamento.setText("Finalizar Compra");
@@ -290,6 +321,19 @@ public class NewJFrame extends javax.swing.JFrame {
                 CancelaCompraMouseClicked(evt);
             }
         });
+        CancelaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelaCompraActionPerformed(evt);
+            }
+        });
+
+        FecharProg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        FecharProg.setText("Fechar");
+        FecharProg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FecharProgMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelResumoDaCompraLayout = new javax.swing.GroupLayout(PanelResumoDaCompra);
         PanelResumoDaCompra.setLayout(PanelResumoDaCompraLayout);
@@ -297,14 +341,18 @@ public class NewJFrame extends javax.swing.JFrame {
             PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelResumoDaCompraLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelSubtotal)
-                    .addComponent(ButtonPagamento))
+                .addComponent(labelSubtotal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(campoSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CancelaCompra))
+                .addComponent(campoSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelResumoDaCompraLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(FecharProg, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CancelaCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ButtonPagamento)
+                .addContainerGap())
         );
         PanelResumoDaCompraLayout.setVerticalGroup(
             PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,11 +361,12 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelSubtotal)
                     .addComponent(campoSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(PanelResumoDaCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonPagamento)
-                    .addComponent(CancelaCompra))
-                .addContainerGap())
+                    .addComponent(CancelaCompra)
+                    .addComponent(FecharProg))
+                .addGap(20, 20, 20))
         );
 
         PanelItemDeCompra.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Item de Compra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -427,7 +476,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(PanelResumoDaCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                                 .addComponent(PanelCarrinhoDeCompras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -455,32 +504,31 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTelActionPerformed
 
-    private void preencherProd(){
+    private void preencherProd() {
         conecta.conexao();
-        
+
         conecta.executasql("select * from produto order by nome_prod");
         try {
             conecta.rs.first();
             jComboBoxProduto.removeAllItems();
-            do{
+            do {
                 jComboBoxProduto.addItem(conecta.rs.getString("nome_prod"));
-                
-            
+
             } while (conecta.rs.next());
         } catch (SQLException ex) {
             Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         conecta.desconexao();
     }
-    
+
     private void ButtonNovoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonNovoClienteMouseClicked
 
         cliteste.setNomeCliente(campoNomeCli.getText());
         cliteste.setEndCliente(campoEndereco.getText());
         cliteste.setTelCliente(campoTel.getText());
         util.SalvarCli(cliteste);
-        
+
     }//GEN-LAST:event_ButtonNovoClienteMouseClicked
 
     private void ButtonNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNovoClienteActionPerformed
@@ -489,19 +537,17 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void ButtonConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonConfirmarMouseClicked
         Produto produto = new Produto();
+        prodteste.setPesquisaprod((String) jComboBoxProduto.getSelectedItem());
+        Produto model = util.Buscaprod(prodteste);
 
-        produto.setId(1);
+        produto.setId(model.getId());
         produto.setNomeProduto(jComboBoxProduto.getSelectedItem().toString());
         produto.setPrecoProduto(Double.parseDouble(precoProduto.getText()));
         produto.setQuantProduto(Integer.parseInt(qtdProduto.getText()));
 
         listaProduto.add(produto);
         listarProduto();
-        
-        salvaprod.setQtdProd(Integer.parseInt(qtdProduto.getText()));
-        salvaprod.totalVenda(Double.parseDouble(precoProduto.getText()), Integer.parseInt(qtdProduto.getText()));
-        campoSubtotal.setText("R$ " +String.valueOf(salvaprod.getValorvenda()));
-        
+        CampoTotal();
     }//GEN-LAST:event_ButtonConfirmarMouseClicked
 
     private void ProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutosActionPerformed
@@ -509,15 +555,19 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ProdutosActionPerformed
 
     private void ProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProdutosMouseClicked
-  
+
         TodosProdutos prod = new TodosProdutos();
         prod.setVisible(true);
     }//GEN-LAST:event_ProdutosMouseClicked
 
     private void CancelaCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelaCompraMouseClicked
+        ((DefaultTableModel) Tabela.getModel()).setRowCount(0);
+        campoCodCliente.setText("");
+        campoNomeCli.setText("");
+        campoEndereco.setText("");
+        campoTel.setText("");
+        ButtonNovoCliente.setEnabled(true);
 
-        JOptionPane.showMessageDialog(null, "Até mais.");
-        System.exit(0);
     }//GEN-LAST:event_CancelaCompraMouseClicked
 
     private void PesquisarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PesquisarClienteMouseClicked
@@ -528,7 +578,7 @@ public class NewJFrame extends javax.swing.JFrame {
         campoEndereco.setText(model.getEndCliente());
         campoTel.setText(model.getTelCliente());
         ButtonNovoCliente.setEnabled(false);
-        
+
     }//GEN-LAST:event_PesquisarClienteMouseClicked
 
     private void PesqClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesqClienteActionPerformed
@@ -540,7 +590,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_campoCodClienteActionPerformed
 
     private void jComboBoxProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxProdutoMouseClicked
-
+        preencherProd();
     }//GEN-LAST:event_jComboBoxProdutoMouseClicked
 
     private void jComboBoxProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProdutoActionPerformed
@@ -551,14 +601,48 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxProdutoActionPerformed
 
     private void ButtonPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonPagamentoMouseClicked
+        int qtd =0;
+        for (Produto produto : listaProduto) {
+            int valor = produto.getQuantProduto();
+            qtd += valor;
+        }
         vendateste.setIdCliente(Integer.parseInt(campoCodCliente.getText()));
-        vendateste.setQtdProd(salvaprod.getQtdProd());
+        vendateste.setQtdProd(qtd);
         vendateste.setValorvenda(salvaprod.getValorvenda());
         util.SalvarVenda(vendateste);
-        
-        JOptionPane.showMessageDialog(null, "Valor Total da Compra: " + vendateste.getValorvenda() +"\nCompra realizada. Agradecemos a preferência e volte sempre!");
+
+        JOptionPane.showMessageDialog(null, "Valor Total da Compra: " + vendateste.getValorvenda() + "\nCompra realizada. Agradecemos a preferência e volte sempre!");
         System.exit(0);
     }//GEN-LAST:event_ButtonPagamentoMouseClicked
+
+    private void ExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExcluirItemMouseClicked
+        Produto produtoS = new Produto();
+        produtoS.setId((int) Tabela.getValueAt(Tabela.getSelectedRow(), 0));
+
+        for (Produto produto : listaProduto) {
+
+            if (produto.getId() == produtoS.getId()) {
+                listaProduto.remove(produto);
+                JOptionPane.showMessageDialog(null, "Produto excluído do carrinho!");
+                listarProduto();
+            }
+            CampoTotal();
+        }
+
+    }//GEN-LAST:event_ExcluirItemMouseClicked
+
+    private void FecharProgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FecharProgMouseClicked
+        JOptionPane.showMessageDialog(null, "Até mais.");
+        System.exit(0);
+    }//GEN-LAST:event_FecharProgMouseClicked
+
+    private void CancelaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelaCompraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelaCompraActionPerformed
+
+    private void campoSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSubtotalActionPerformed
+
+    }//GEN-LAST:event_campoSubtotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -600,6 +684,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton ButtonNovoCliente;
     private javax.swing.JButton ButtonPagamento;
     private javax.swing.JButton CancelaCompra;
+    private javax.swing.JButton ExcluirItem;
+    private javax.swing.JButton FecharProg;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel PanelCarrinhoDeCompras;
     private javax.swing.JPanel PanelDadosDoCliente;

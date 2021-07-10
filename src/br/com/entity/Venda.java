@@ -36,9 +36,9 @@ public class Venda extends Cliente {
         this.valorvenda = valorvenda;
     }
 
-    
-    public Double totalVenda(Double preco, int qtd){
-        this.valorvenda += (preco * qtd);
+   
+    public Double totalVenda(Double preco){
+        this.valorvenda += preco;
         
         return this.valorvenda;
         
